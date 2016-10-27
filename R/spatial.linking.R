@@ -1,8 +1,9 @@
-# simple.linking.R
+# spatial.linking.R
 #'
 #'@export
 
-simple.linking <- function(obj.name = "linked.data",
+# linking function that support plain and simple spatial linking ---------------
+simple.clinking <- function(obj.name = "linked.data",
                            download = FALSE,
                            data.path = ".",
                            rasterize = FALSE,
@@ -54,11 +55,14 @@ simple.linking <- function(obj.name = "linked.data",
     # assign object name -------------------------------------------------------
     eval(parse(text = paste(obj.name, " <<- dat", sep = "")))
   }
-detach(census.attr)
-detach(random.coords)
+
+  # detach no longer needed internal datasets
+  detach(census.attr)
+  detach(random.coords)
 }
 
-focal.linking <- function(obj.name = "linked.data",
+# linking function that support focal analyses ---------------------------------
+focal.clinking <- function(obj.name = "linked.data",
                                   download = FALSE,
                                   data.path = ".",
                                   rasterize = FALSE,
@@ -102,7 +106,7 @@ focal.linking <- function(obj.name = "linked.data",
   if(fun == "mean"){
     for(i in names(census.attr)){
       if(!exists("dat"){
-
+       fds
       }
     }
 
