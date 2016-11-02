@@ -5,15 +5,43 @@
 random.coordinates <- function(obj.name = "random.coords", mun.N = 100,
                                resp.N = 100){
 
+  # tmp
+  setwd("C:/Users/mueller2/Desktop/")
+
   # load municipalties shapefile -----------------------------------------------
   municipalities <- rgdal::readOGR("VG250_Gemeinden.shp", "VG250_Gemeinden",
                                    encoding = "UTF-8")
 
   # transform to EPSG:3035 -----------------------------------------------------
-  municipalities <- spTransform(municipalities, '+init=epsg:3035')
+  municipalities <- sp::spTransform(municipalities, '+init=epsg:3035')
+
+  # load inhabitants data ------------------------------------------------------
+  # inhab <- read.table(paste("C:/Users/mueller2/Desktop/csv_Bevoelkerung/",
+  #                           "Zensus11_Datensatz_Bevoelkerung.csv", sep = ""),
+  #                     sep = ";",
+  #                     dec = ",", header = TRUE)[, c("AGS_12", "AEWZ")]
+  #
+  # names(inhab)[names(inhab) == "AGS_12"] <- "RS"
+  #
+  # inhab <- inhab[!(nchar(inhab$RS) < 11),]
+  #
+  #
+  # stringr::str_pad(inhab$RS, 12, pad = "0")
+  # stringr::str_pad(municipalities@data$RS, 12, pad = "0")
+
+  # # merge with municipalties ---------------------------------------------------
+  # municipalities.bla <- sp::merge(municipalities, inhab, by = "RS",
+  #                                 all.x = FALSE)
 
   # draw random sample of municipalities ---------------------------------------
   municipalities.random <- municipalities[sample(nrow(municipalities), mun.N),]
+
+  # municipalities$weights <- municipalities$AEWZ / 80000000
+
+  # # weighted
+  # municipalities.random <- municipalities[sample(nrow(municipalities), mun.N,
+  #                                                prob = (municipalities$AEWZ /
+  #                                                  80000000)),]
 
   # draw random sample of random municipalities --------------------------------
   for(i in 1:nrow(municipalities.random)){
@@ -39,54 +67,3 @@ random.coordinates <- function(obj.name = "random.coords", mun.N = 100,
   }
   rm(i, k)
 }
-
-
-
-# bla <- sp::spsample(municipalities, 1000, type = "clustered")
-#
-# mun2 <- municipalities[sample(nrow(municipalities), 3), ]
-#
-# setwd(data.path)
-
-# inspire.grids <- rgdal::readOGR("DE_Gitter_ETRS89_LAEA_1km.shp",
-#                                 "DE_Gitter_ETRS89_LAEA_1km")[, c("ID_1km")]
-
-
-
-# municipalities <- rgdal::readOGR("VG250_Gemeinden.shp",
-#                                 "VG250_Gemeinden",
-#                                 encoding = "UTF-8")
-#
-# municipalities.random <- municipalities[sample(nrow(municipalities), 100),]
-#
-#
-#
-#
-# for(i in 1:nrow(municipalities.random)){
-#   if(!exists("k")){
-#     #k <- list()
-#     #k <- NULL
-#     k <- sp::spsample(municipalities.random[i,], 100, type = "random")
-#   }
-#   else if(exists("k")){
-#     k <- rbind(k, sp::spsample(municipalities.random[i,], 100,
-#                                type = "random"))
-#     # eval(parse(text = paste("k$", municipalities.random[i,], "<- ",
-#     #                         "sp::spsample(municipalities.random[i,], 35, type = 'random')",
-#     #                         sep = "")))
-#   }
-#   j <<- k
-#
-# }
-# rm(i, k)
-
-
-# rast <- raster(census.1km, layer = 1)
-#
-# rast2 <- as.factor(rast$Gitter_ID_1km)
-#
-# rastpol <- rasterToPolygons(rast)
-#
-# blubb <- ratify(rast)
-#
-# census.1km.b <- SpatialPolygonsDataFrame(census.1km)
