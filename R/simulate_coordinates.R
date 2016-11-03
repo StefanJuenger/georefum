@@ -1,13 +1,14 @@
-# random.coordinates.R
+# simulate_coordinates.R
 #'
 #'@export
 
-random.coordinates <- function(mun.N = 100, resp.N = 100){
+simulate_coordinates <- function(mun.N = 100,
+                                 resp.N = 100){
 
   # tmp
   setwd("C:/Users/mueller2/Desktop/")
 
-  # load municipalties shapefile -----------------------------------------------
+  # load municipalties shapefile -i----------------------------------------------
   municipalities <- rgdal::readOGR("VG250_Gemeinden.shp", "VG250_Gemeinden",
                                    encoding = "UTF-8")
 
@@ -66,5 +67,4 @@ random.coordinates <- function(mun.N = 100, resp.N = 100){
 
   # return object --------------------------------------------------------------
   return(k)
-  #rm(i, k)
 }
