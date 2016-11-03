@@ -1,9 +1,13 @@
-# rasterize.census.R
+# census_rasterize.R
 #'
 #'@export
 
-rasterize.census <- function(data.path = ".", download = FALSE, save = FALSE,
-                             save.format = "GTiff", save.overwrite = FALSE){
+census_rasterize <- function(data.path = ".",
+                             download = FALSE,
+                             save = FALSE,
+                             obj.name = census.attr,
+                             save.format = "GTiff",
+                             save.overwrite = FALSE){
 
   # download census data from zensus2011.de if toggled -------------------------
   if(download == TRUE){
@@ -108,7 +112,7 @@ rasterize.census <- function(data.path = ".", download = FALSE, save = FALSE,
     }
   }
   if(save == FALSE){
-  census.attr <<- census.rasters
+  eval(parse(text = paste(obj.name, " <<- census.rasters", sep = "")))
   }
   cat("done.")
 }
