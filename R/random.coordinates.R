@@ -2,8 +2,7 @@
 #'
 #'@export
 
-random.coordinates <- function(obj.name = "random.coords", mun.N = 100,
-                               resp.N = 100){
+random.coordinates <- function(mun.N = 100, resp.N = 100){
 
   # tmp
   setwd("C:/Users/mueller2/Desktop/")
@@ -60,10 +59,12 @@ random.coordinates <- function(obj.name = "random.coords", mun.N = 100,
       k <- rbind(k, sp::spsample(municipalities.random[i,], 100,
                                  type = "random"))
     }
-
-    # assign object name -------------------------------------------------------
-    eval(parse(text = paste(obj.name, " <<- k", sep = "")))
-
   }
-  rm(i, k)
+
+  # assign random id to every case ---------------------------------------------
+
+
+  # return object --------------------------------------------------------------
+  return(k)
+  #rm(i, k)
 }
