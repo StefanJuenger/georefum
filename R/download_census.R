@@ -1,9 +1,10 @@
 # download.census.R
-#'
+#' Download
+#'@param data.path Place where the data will be stored
 #'@export
 
 # download census 1km grid data ------------------------------------------------
-download.census.1km <- function(data.path = "."){
+download_census_1km <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Pressemitteilung/DemografischeGrunddaten/",
                             "csv_Zensusatlas_spitze_Werte_1km_Gitter.zip",
@@ -26,7 +27,7 @@ download.census.1km <- function(data.path = "."){
 }
 
 # download census 100m grid data -----------------------------------------------
-download.census.100m <- function(data.path = "."){
+download_census_100m <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Pressemitteilung/DemografischeGrunddaten/",
                             "csv_Bevoelkerung_100m_Gitter.zip",
@@ -49,7 +50,7 @@ download.census.100m <- function(data.path = "."){
 }
 
 # download inspire grid shapefile ----------------------------------------------
-download.inspire.grid <- function(data.path = "."){
+download_inspire_grid <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Shapefile/Inspire.zip",
                             "?__blob=publicationFile&v=5",
@@ -71,7 +72,7 @@ download.inspire.grid <- function(data.path = "."){
 }
 
 # download shapefile for municipalties -----------------------------------------
-download.municipalties <- function(data.path = "."){
+download_municipalties <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Shapefile/VG250_1Jan2011_UTM32.zip",
                             "?__blob=publicationFile&v=25",
