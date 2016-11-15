@@ -20,7 +20,7 @@ census_linking_focal <- function(download = FALSE,
                                  own.data = FALSE,
                                  data.path = ".",
                                  coords.file = "",
-                                 focal.matrix = matrix(c(1, 1, 1,                                                                                                  1, 1, 1,
+                                 focal.matrix = matrix(c(1, 1, 1,                                                                                                1, 1, 1,
                                                          1, 1, 1),
                                                        nr = 3, nc = 3),
                                  fun = "mean"){

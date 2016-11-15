@@ -1,8 +1,9 @@
 # simulate_surveydata.R
-#'
+#' Simulate survey data
+#'@param N Number of respondents that should be simulated
 #'@export
 
-simulate_surveydata <- function(N = 10000){
+simulate_surveydata <- function(N = 10000) {
 
   # sinulate survey data attributes --------------------------------------------
   return(

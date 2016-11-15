@@ -7,10 +7,10 @@ census_rasterize <- function(data.path = ".",
                              save = FALSE,
                              obj.name = census.attr,
                              save.format = "GTiff",
-                             save.overwrite = FALSE){
+                             save.overwrite = FALSE) {
 
   # download census data from zensus2011.de if toggled -------------------------
-  if(download == TRUE){
+  if (download == TRUE) {
     cat("Downloading census data")
     download.census.1km()
     #download.census.100m()
@@ -44,16 +44,16 @@ census_rasterize <- function(data.path = ".",
   # census100m <- census100m[, -1]
 
   # convert each layer in single variable raster file and add to list ----------
-  for(i in names(census.1km)){
+  for (i in names(census.1km)) {
 
     # check if raster list already exists --------------------------------------
-    if(!exists("census.rasters")){
+    if (!exists("census.rasters")) {
 
       # create raster list -----------------------------------------------------
       census.rasters <- list()
 
       # check if saving is toggled ---------------------------------------------
-      if(save == TRUE){
+      if (save == TRUE) {
 
         cat("Saving... ")
 
@@ -71,7 +71,7 @@ census_rasterize <- function(data.path = ".",
       }
 
       # code if saving is not toggled ------------------------------------------
-      else{
+      else {
 
         cat("Save in list... ")
 
@@ -83,10 +83,10 @@ census_rasterize <- function(data.path = ".",
     }
 
     # code if list already exists ----------------------------------------------
-    else{
+    else {
 
       # check if saving is toggled ---------------------------------------------
-      if(save == TRUE){
+      if (save == TRUE) {
 
         # load i raster in raster list -----------------------------------------
         eval(parse(text = paste("census.rasters$", i, "<- ",
@@ -102,7 +102,7 @@ census_rasterize <- function(data.path = ".",
       }
 
       # code if saving is not toggled ------------------------------------------
-      else{
+      else {
 
         # load i raster in raster list -----------------------------------------
         eval(parse(text = paste("census.rasters$", i, "<- ",
@@ -111,7 +111,7 @@ census_rasterize <- function(data.path = ".",
       }
     }
   }
-  if(save == FALSE){
+  if (save == FALSE) {
   eval(parse(text = paste(obj.name, " <<- census.rasters", sep = "")))
   }
   cat("done.")
