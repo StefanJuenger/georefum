@@ -4,7 +4,7 @@
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' andheader...
 #' @return A \code{data.frame} with census attributes for each coordinate
-#'@export
+#' @export
 
 cdr_linking_simple <- function(file = "",
                                coords.file = "") {
