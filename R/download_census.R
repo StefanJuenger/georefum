@@ -26,6 +26,29 @@ download_census_1km <- function(data.path = "."){
                     sep = ""))
 }
 
+# download census 1km grid data (categorized) ----------------------------------
+download_census_1km_cat <- function(data.path = "."){
+  download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
+                            "DE/Pressemitteilung/DemografischeGrunddaten/",
+                            "csv_Zensusatlas_klassierte_Werte_1km_Gitter.zip",
+                            "?__blob=publicationFile&v=8",
+                            sep = ""),
+                destfile = paste(data.path, "/",
+                                 "Zensus_klassierte_Werte_1km-Gitter.zip",
+                                 sep = ""),
+                method = "auto",
+                mode = "wb")
+
+  # extract downloaded zip file ------------------------------------------------
+  unzip(paste(data.path, "/", "Zensus_klassierte_Werte_1km-Gitter.zip",
+              sep = ""),
+        exdir = paste(data.path))
+
+  # remove downloaded zip file -------------------------------------------------
+  file.remove(paste(data.path, "/", "Zensus_klassierte_Werte_1km-Gitter.zip",
+                    sep = ""))
+}
+
 # download census 100m grid data -----------------------------------------------
 download_census_100m <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
