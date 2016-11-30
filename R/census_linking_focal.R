@@ -8,6 +8,7 @@
 #' \code{own.data =}
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' andheader...
+#' @param coords.object An R object ("Rdata" or "rda") containing the coordinates
 #' @param focal.matrix Matrix on which upon focal analyses are computed; cells
 #' can be weighted as well as set to \code{NA} (for details see function
 #' \code{raster::focal()})
@@ -20,6 +21,7 @@ census_linking_focal <- function(download = FALSE,
                                  own.data = FALSE,
                                  data.path = ".",
                                  coords.file = "",
+                                 coords.object = "",
                                  focal.matrix = matrix(c(1, 1, 1,                                                                                                1, 1, 1,
                                                          1, 1, 1),
                                                        nr = 3, nc = 3),
@@ -61,26 +63,29 @@ census_linking_focal <- function(download = FALSE,
   cat("done.\n")
 
   # case: use random example coordinates ---------------------------------------
-  if(coords.file == ""){
-    cat("Using random example coordinates... ")
+  if (coords.file == "" && coords.object == "") {
     data(random.coords)
-    cat("done.\n")
   }
 
-  # case: use own coordinates --------------------------------------------------
-  else{
-    cat("Using and preparing own coordinates... ")
+  # case: use own coordinates as csv -------------------------------------------
+  if (coords.file != "" && coords.object == "") {
     coords <- read.table(coords.file, sep = ";", dec = ",", header = TRUE)
-    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], dat,
+    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
                                      proj4string = CRS("+init=epsg:3035"))
-    cat("done.\n")
+  }
+
+  # case: use own coordinates as object ----------------------------------------
+  if (coords.file == "" && coords.object != "") {
+    coords <- coords.object
+    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
+                                     proj4string = CRS("+init=epsg:3035"))
   }
 
   # focal analyses -------------------------------------------------------------
   cat("Running focal analyses and merging to one data collection:\n")
 
   # case: no own coordinates file was provided ---------------------------------
-  if(coords.file == ""){
+  if (coords.file == "" && coords.object == "") {
 
     # run focal analyses on all census attributes ------------------------------
     for(i in names(census.attr)){
@@ -123,7 +128,47 @@ census_linking_focal <- function(download = FALSE,
   }
 
   # case: own coordinates were provided ----------------------------------------
-  else{
+  if (coords.file != "" && coords.object == "") {
+
+    # run focal analyses on all census attributes ------------------------------
+    for(i in names(census.attr)){
+
+      # case: object does not exist yet ----------------------------------------
+      if(!exists("dat")){
+        cat(paste(i, "... ", sep = ""))
+        eval(
+          parse(
+            text = paste("dat <- data.frame(", i,
+                         ".", fun, " = ",
+                         "SDMTools::extract.data(coords@coords, ",
+                         "raster::focal(census.attr$", i,
+                         ", w = focal.matrix, ",
+                         "fun = ",
+                         "function(x){", fun, "(x[-which(is.na(x))])})))",
+                         sep = "")))
+        cat("done.\n")
+      }
+
+      # case: object does not exist yet ----------------------------------------
+      else{
+        cat(paste(i, "... ", sep = ""))
+        eval(
+          parse(
+            text = paste("dat <- data.frame(cbind(dat, ", i,
+                         ".", fun, " = ",
+                         "SDMTools::extract.data(coords@coords, ",
+                         "raster::focal(census.attr$", i,
+                         ", w = focal.matrix, ",
+                         "fun = ",
+                         "function(x){", fun, "(x[-which(is.na(x))])}))))",
+                         sep = "")))
+        cat("done.\n")
+      }
+    }
+  }
+
+  # case: own coordinates were provided ----------------------------------------
+  if (coords.file == "" && coords.object != "") {
 
     # run focal analyses on all census attributes ------------------------------
     for(i in names(census.attr)){

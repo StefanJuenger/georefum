@@ -8,6 +8,7 @@
 #' \code{own.data =}
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' andheader...
+#' @param coords.object An R object ("Rdata" or "rda") containing the coordinates
 #' @return A \code{data.frame} with census attributes for each coordinate
 #' @importFrom SDMTools extract.data
 #'@export
@@ -15,7 +16,8 @@
 census_linking_simple <- function(download = FALSE,
                                   own.data = FALSE,
                                   data.path = ".",
-                                  coords.file = "") {
+                                  coords.file = "",
+                                  coords.object = "") {
 
   # case: census data should be downloaded -------------------------------------
   if (download == TRUE) {
@@ -48,21 +50,28 @@ census_linking_simple <- function(download = FALSE,
 
 
   # case: use random example coordinates ---------------------------------------
-  if (coords.file == "") {
+  if (coords.file == "" && coords.object == "") {
     data(random.coords)
   }
 
-  # case: use own coordinates --------------------------------------------------
-  else {
+  # case: use own coordinates as csv -------------------------------------------
+  if (coords.file != "" && coords.object == "") {
     coords <- read.table(coords.file, sep = ";", dec = ",", header = TRUE)
-    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], dat,
+    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
+                                     proj4string = CRS("+init=epsg:3035"))
+  }
+
+  # case: use own coordinates as object ----------------------------------------
+  if (coords.file == "" && coords.object != "") {
+    coords <- coords.object
+    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
                                      proj4string = CRS("+init=epsg:3035"))
   }
 
   # link coordinates with census data ------------------------------------------
 
   # case: no own coordinates file was provided ---------------------------------
-  if (coords.file == "") {
+  if (coords.file == "" && coords.object == "") {
 
     # run linking on all census attributes -------------------------------------
     for (i in names(census.attr)) {
@@ -87,8 +96,34 @@ census_linking_simple <- function(download = FALSE,
     }
   }
 
-  # case: use own coordinates --------------------------------------------------
-  else {
+  # case: use own coordinates as csv -------------------------------------------
+  if (coords.file != "" && coords.object == "") {
+
+    # run linking on all census attributes -------------------------------------
+    for (i in names(census.attr)) {
+
+      # case: object does not exist yet ----------------------------------------
+      if (!exists("dat")) {
+        eval(
+          parse(
+            text = paste("dat <- data.frame(", i,
+                         " = SDMTools::extract.data(coords@coords,",
+                         " census.attr$", i, "))")))
+      }
+
+      # case: object already exists --------------------------------------------
+      else {
+        eval(
+          parse(
+            text = paste("dat <- data.frame(cbind(dat,", i,
+                         " = SDMTools::extract.data(coords@coords,",
+                         " census.attr$", i, ")))")))
+      }
+    }
+  }
+
+  # case: use own coordinates as object ----------------------------------------
+  if (coords.file == "" && coords.object != "") {
 
     # run linking on all census attributes -------------------------------------
     for (i in names(census.attr)) {
