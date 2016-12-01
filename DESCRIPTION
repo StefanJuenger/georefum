@@ -1,0 +1,15 @@
+Package: georefum
+Type: Package
+Title: Processing and linking of spatial data within the GeorefUm project at GESIS
+Version: 0.1.0
+Authors@R: person("Stefan", "Müller", email = "stefan.mueller@gesis.org",
+           role = c("aut", "cre"))
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+LazyData: TRUE
+Imports:
+    sp,
+    raster,
+    stringr,
+    SDMTools
+RoxygenNote: 5.0.1
