@@ -15,6 +15,7 @@
 #' can be weighted as well as set to \code{NA} (for details see function
 #' \code{raster::focal()})
 #' @param fun Function that is used in the focal analyses
+#' @param suffix Suffix that is appended to variable names
 #' @return A \code{data.frame} with census attributes based on focal analyses
 #' for each coordinate
 #'@export
@@ -33,7 +34,8 @@ census_linking_focal <- function(download = FALSE,
                                                          1, 1, 1,
                                                          1, 1, 1),
                                                        nr = 3, nc = 3),
-                                 fun = "mean"){
+                                 fun = "mean",
+                                 suffix = "mean"){
 
   # workaround for internal raster function in SDMTools::extract.data ----------
   require(raster)
@@ -105,7 +107,7 @@ census_linking_focal <- function(download = FALSE,
         eval(
           parse(
             text = paste("dat <- data.frame(", i,
-                         ".", fun, " = ",
+                         ".", suffix, " = ",
                          "SDMTools::extract.data(random.coords@coords, ",
                          "raster::focal(census.attr$", i,
                          ", w = focal.matrix, ",
@@ -121,7 +123,7 @@ census_linking_focal <- function(download = FALSE,
         eval(
           parse(
             text = paste("dat <- data.frame(cbind(dat, ", i,
-                         ".", fun, " = ",
+                         ".", suffix, " = ",
                          "SDMTools::extract.data(random.coords@coords, ",
                          "raster::focal(census.attr$", i,
                          ", w = focal.matrix, ",
@@ -148,7 +150,7 @@ census_linking_focal <- function(download = FALSE,
         eval(
           parse(
             text = paste("dat <- data.frame(", i,
-                         ".", fun, " = ",
+                         ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
                          "raster::focal(census.attr$", i,
                          ", w = focal.matrix, ",
@@ -164,7 +166,7 @@ census_linking_focal <- function(download = FALSE,
         eval(
           parse(
             text = paste("dat <- data.frame(cbind(dat, ", i,
-                         ".", fun, " = ",
+                         ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
                          "raster::focal(census.attr$", i,
                          ", w = focal.matrix, ",
@@ -188,7 +190,7 @@ census_linking_focal <- function(download = FALSE,
         eval(
           parse(
             text = paste("dat <- data.frame(", i,
-                         ".", fun, " = ",
+                         ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
                          "raster::focal(census.attr$", i,
                          ", w = focal.matrix, ",
@@ -204,7 +206,7 @@ census_linking_focal <- function(download = FALSE,
         eval(
           parse(
             text = paste("dat <- data.frame(cbind(dat, ", i,
-                         ".", fun, " = ",
+                         ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
                          "raster::focal(census.attr$", i,
                          ", w = focal.matrix, ",
