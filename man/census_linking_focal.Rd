@@ -4,9 +4,12 @@
 \alias{census_linking_focal}
 \title{Link Coordinates to German Census 2011 Data by Using Focal Analyses}
 \usage{
-census_linking_focal(download = FALSE, own.data = FALSE, data.path = ".",
-  coords.file = "", coords.object = "", focal.matrix = matrix(c(1, 1, 1,
-  1, 1, 1, 1, 1, 1), nr = 3, nc = 3), fun = "mean")
+census_linking_focal(download = FALSE, own.data = FALSE,
+  which = c("Einwohner", "Alter_D", "unter18_A", "ab65_A", "Auslaender_A",
+  "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
+  set.missings = TRUE, data.path = ".", coords.file = "",
+  coords.object = "", focal.matrix = matrix(c(1, 1, 1, 1, 1, 1, 1, 1, 1), nr
+  = 3, nc = 3), fun = "mean")
 }
 \arguments{
 \item{download}{Download census data (calls
@@ -14,6 +17,8 @@ census_linking_focal(download = FALSE, own.data = FALSE, data.path = ".",
 
 \item{own.data}{Use own already downloaded census data (calls
 \code{georefum::rasterize.census()}, original filenames must be preserved)}
+
+\item{which}{Vector of Census attributeses that should be linked to the data}
 
 \item{data.path}{Has to be defined when using option \code{download =} or
 \code{own.data =}}
@@ -28,6 +33,8 @@ can be weighted as well as set to \code{NA} (for details see function
 \code{raster::focal()})}
 
 \item{fun}{Function that is used in the focal analyses}
+
+\item{set.missing}{Toggle whether to set missings on Census attributes}
 }
 \value{
 A \code{data.frame} with census attributes based on focal analyses

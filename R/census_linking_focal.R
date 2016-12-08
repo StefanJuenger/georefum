@@ -4,6 +4,8 @@
 #' \code{georefum::download.census()})
 #' @param own.data Use own already downloaded census data (calls
 #' \code{georefum::rasterize.census()}, original filenames must be preserved)
+#' @param which Vector of Census attributeses that should be linked to the data
+#' @param set.missing Toggle whether to set missings on Census attributes
 #' @param data.path Has to be defined when using option \code{download =} or
 #' \code{own.data =}
 #' @param coords.file Path to file with coordinates; must be formatted as
@@ -19,13 +21,22 @@
 
 census_linking_focal <- function(download = FALSE,
                                  own.data = FALSE,
+                                 which = c("Einwohner", "Alter_D", "unter18_A",
+                                           "ab65_A", "Auslaender_A",
+                                           "HHGroesse_D", "Leerstandsquote",
+                                           "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
+                                 set.missings = TRUE,
                                  data.path = ".",
                                  coords.file = "",
                                  coords.object = "",
-                                 focal.matrix = matrix(c(1, 1, 1,                                                                                                1, 1, 1,
+                                 focal.matrix = matrix(c(1, 1, 1,
+                                                         1, 1, 1,
                                                          1, 1, 1),
                                                        nr = 3, nc = 3),
                                  fun = "mean"){
+
+  # workaround for internal raster function in SDMTools::extract.data ----------
+  require(raster)
 
   # case: census data should be downloaded -------------------------------------
   if(download == TRUE){
@@ -49,16 +60,14 @@ census_linking_focal <- function(download = FALSE,
   }
 
   # set missing values in census data ------------------------------------------
-  cat("Preparing data (set missings, etc.)... ")
-  for(i in names(census.attr)){
-    eval(
-      parse(
-        text = paste("census.attr$", i, "[census.attr$", i, "[] == -1] <- NA",
-                     sep = "")))
-    eval(
-      parse(
-        text = paste("census.attr$", i, "[census.attr$", i, "[] == -9] <- NA",
-                     sep = "")))
+  if (set.missings == TRUE) {
+    cat("Preparing data (set missings, etc.)... ")
+    for (i in which) {
+      eval(
+        parse(
+          text = paste("census.attr$", i, "[census.attr$", i, " <= -1] <- NA",
+                       sep = "")))
+    }
   }
   cat("done.\n")
 
@@ -88,7 +97,7 @@ census_linking_focal <- function(download = FALSE,
   if (coords.file == "" && coords.object == "") {
 
     # run focal analyses on all census attributes ------------------------------
-    for(i in names(census.attr)){
+    for(i in which){
 
       # case: object does not exist yet ----------------------------------------
       if(!exists("dat")){
@@ -131,7 +140,7 @@ census_linking_focal <- function(download = FALSE,
   if (coords.file != "" && coords.object == "") {
 
     # run focal analyses on all census attributes ------------------------------
-    for(i in names(census.attr)){
+    for(i in which){
 
       # case: object does not exist yet ----------------------------------------
       if(!exists("dat")){
@@ -171,7 +180,7 @@ census_linking_focal <- function(download = FALSE,
   if (coords.file == "" && coords.object != "") {
 
     # run focal analyses on all census attributes ------------------------------
-    for(i in names(census.attr)){
+    for(i in which){
 
       # case: object does not exist yet ----------------------------------------
       if(!exists("dat")){
