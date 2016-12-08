@@ -11,13 +11,23 @@
 #' @param coords.object An R object ("Rdata" or "rda") containing the coordinates
 #' @return A \code{data.frame} with census attributes for each coordinate
 #' @importFrom SDMTools extract.data
+#' @importFrom raster getValues
+#' @import raster
 #'@export
 
 census_linking_simple <- function(download = FALSE,
                                   own.data = FALSE,
+                                  which = c("Einwohner", "Alter_D", "unter18_A",
+                                            "ab65_A", "Auslaender_A",
+                                            "HHGroesse_D", "Leerstandsquote",
+                                            "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
+                                  set.missings = TRUE,
                                   data.path = ".",
                                   coords.file = "",
                                   coords.object = "") {
+
+  # workaround for internal raster function in SDMTools::extract.data ----------
+  require(raster)
 
   # case: census data should be downloaded -------------------------------------
   if (download == TRUE) {
@@ -40,12 +50,13 @@ census_linking_simple <- function(download = FALSE,
   }
 
   # set missing values in census data ------------------------------------------
-  for (i in names(census.attr)) {
-
-    eval(
-      parse(
-        text = paste("census.attr$", i, " @data@values", "[census.attr$", i,
-                     "@data@values <= -1] <- NA", sep = "")))
+  if (set.missings == TRUE) {
+    for (i in which) {
+      eval(
+        parse(
+          text = paste("census.attr$", i, "[census.attr$", i, " <= -1] <- NA",
+                       sep = "")))
+    }
   }
 
 
@@ -74,7 +85,7 @@ census_linking_simple <- function(download = FALSE,
   if (coords.file == "" && coords.object == "") {
 
     # run linking on all census attributes -------------------------------------
-    for (i in names(census.attr)) {
+    for (i in which) {
 
       # case: object does not exist yet ----------------------------------------
       if (!exists("dat")) {
@@ -100,7 +111,7 @@ census_linking_simple <- function(download = FALSE,
   if (coords.file != "" && coords.object == "") {
 
     # run linking on all census attributes -------------------------------------
-    for (i in names(census.attr)) {
+    for (i in which) {
 
       # case: object does not exist yet ----------------------------------------
       if (!exists("dat")) {
@@ -126,7 +137,7 @@ census_linking_simple <- function(download = FALSE,
   if (coords.file == "" && coords.object != "") {
 
     # run linking on all census attributes -------------------------------------
-    for (i in names(census.attr)) {
+    for (i in which) {
 
       # case: object does not exist yet ----------------------------------------
       if (!exists("dat")) {
@@ -147,6 +158,7 @@ census_linking_simple <- function(download = FALSE,
       }
     }
   }
+
 
   # remove no longer needed internal datasets ----------------------------------
   if (exists("census.attr")) {

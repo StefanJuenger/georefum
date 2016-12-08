@@ -4,8 +4,11 @@
 \alias{census_linking_simple}
 \title{Link Coordinates to German Census 2011 Data}
 \usage{
-census_linking_simple(download = FALSE, own.data = FALSE, data.path = ".",
-  coords.file = "", coords.object = "")
+census_linking_simple(download = FALSE, own.data = FALSE,
+  which = c("Einwohner", "Alter_D", "unter18_A", "ab65_A", "Auslaender_A",
+  "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
+  set.missings = TRUE, data.path = ".", coords.file = "",
+  coords.object = "")
 }
 \arguments{
 \item{download}{Download census data (calls
