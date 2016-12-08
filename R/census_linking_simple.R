@@ -4,6 +4,8 @@
 #' \code{georefum::download.census()})
 #' @param own.data Use own already downloaded census data (calls
 #' \code{georefum::rasterize.census()}, original filenames must be preserved)
+#' @param which Vector of Census attributeses that should be linked to the data
+#' @param set.missing Toggle whether to set missings on Census attributes
 #' @param data.path Has to be defined when using option \code{download =} or
 #' \code{own.data =}
 #' @param coords.file Path to file with coordinates; must be formatted as

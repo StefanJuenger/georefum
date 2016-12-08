@@ -17,6 +17,8 @@ census_linking_simple(download = FALSE, own.data = FALSE,
 \item{own.data}{Use own already downloaded census data (calls
 \code{georefum::rasterize.census()}, original filenames must be preserved)}
 
+\item{which}{Vector of Census attributeses that should be linked to the data}
+
 \item{data.path}{Has to be defined when using option \code{download =} or
 \code{own.data =}}
 
@@ -24,6 +26,8 @@ census_linking_simple(download = FALSE, own.data = FALSE,
 csv text file with a 'X' andheader...}
 
 \item{coords.object}{An R object ("Rdata" or "rda") containing the coordinates}
+
+\item{set.missing}{Toggle whether to set missings on Census attributes}
 }
 \value{
 A \code{data.frame} with census attributes for each coordinate
