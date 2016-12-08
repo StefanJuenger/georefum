@@ -5,7 +5,7 @@ Version: 0.5.0
 Authors@R: person("Stefan", "Müller", email = "stefan.mueller@gesis.org",
            role = c("aut", "cre"))
 Description: More about what it does (maybe more than one line)
-License: > GPL-2
+License: >= GPL-2
 LazyData: TRUE
 Depends: R (>= 3.3.2)
 Imports:
