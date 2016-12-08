@@ -9,7 +9,7 @@ census_linking_focal(download = FALSE, own.data = FALSE,
   "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
   set.missings = TRUE, data.path = ".", coords.file = "",
   coords.object = "", focal.matrix = matrix(c(1, 1, 1, 1, 1, 1, 1, 1, 1), nr
-  = 3, nc = 3), fun = "mean")
+  = 3, nc = 3), fun = "mean", suffix = "mean")
 }
 \arguments{
 \item{download}{Download census data (calls
@@ -33,6 +33,8 @@ can be weighted as well as set to \code{NA} (for details see function
 \code{raster::focal()})}
 
 \item{fun}{Function that is used in the focal analyses}
+
+\item{suffix}{Suffix that is appended to variable names}
 
 \item{set.missing}{Toggle whether to set missings on Census attributes}
 }
