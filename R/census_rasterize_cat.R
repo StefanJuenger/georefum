@@ -1,11 +1,20 @@
 # census_rasterize_cat.R
-#'
+#' Convert categorized German Census 2011 files into raster grids files
+#' @param data.path Has to be defined when using option \code{download =} or
+#' \code{own.data =}
+#' @param download Download census data (calls
+#' \code{georefum::download.census()})
+#' @param save Toggle whether Census rasters should be stored as individual
+#' raster files on hard disk
+#' @param save.format Define which raster data format should be used for
+#' storing
+#' @param save.overwrite Will overwrite existing files if they exist
 #'@export
 
 census_rasterize_cat <- function(data.path = ".",
                                  download = FALSE,
                                  save = FALSE,
-                                 obj.name = census.attr,
+                                 #obj.name = census.attr,
                                  save.format = "GTiff",
                                  save.overwrite = FALSE) {
 
@@ -110,10 +119,12 @@ census_rasterize_cat <- function(data.path = ".",
                                 sep = "")))
       }
     }
-    }
+  }
+
+  cat("done.")
+
+  # case: raster files should not be stored as individual files ----------------
   if (save == FALSE) {
-    #eval(parse(text = paste(obj.name, " <<- census.rasters", sep = "")))
     return(census.rasters)
   }
-  cat("done.")
-  }
+}
