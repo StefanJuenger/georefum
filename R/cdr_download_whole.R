@@ -1,5 +1,6 @@
 # cdr_download_whole.R
-#' Download
+#' Download all available layers of environmental noise data for all German
+#' federal states in the CDR
 #'@param data.path Place where the data will be stored
 #'@export
 #'
