@@ -132,9 +132,6 @@ census_linking_focal <- function(download = FALSE,
                          sep = "")))
         message("done.\n")
       }
-
-      # # write to object in global environment ----------------------------------
-      # eval(parse(text = paste(obj.name, " <<- dat", sep = "")))
     }
   }
 
