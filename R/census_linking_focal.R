@@ -42,13 +42,13 @@ census_linking_focal <- function(download = FALSE,
 
   # case: census data should be downloaded -------------------------------------
   if(download == TRUE){
-    cat("Downloading and rasterizing census data... ")
+    message("Downloading and rasterizing census data... ")
     download.census.1km()
     #download.census.100m()
 
     # rasterize downloaded data ------------------------------------------------
     rasterize.census(data.path)
-    cat("done.\n")
+    message("done.\n")
   }
 
   # case: own, already downloaded census data should be used -------------------
@@ -63,7 +63,7 @@ census_linking_focal <- function(download = FALSE,
 
   # set missing values in census data ------------------------------------------
   if (set.missings == TRUE) {
-    cat("Preparing data (set missings, etc.)... ")
+    message("Preparing data (set missings, etc.)... ")
     for (i in which) {
       eval(
         parse(
@@ -71,7 +71,7 @@ census_linking_focal <- function(download = FALSE,
                        sep = "")))
     }
   }
-  cat("done.\n")
+  message("done.\n")
 
   # case: use random example coordinates ---------------------------------------
   if (coords.file == "" && coords.object == "") {
@@ -93,7 +93,7 @@ census_linking_focal <- function(download = FALSE,
   }
 
   # focal analyses -------------------------------------------------------------
-  cat("Running focal analyses and merging to one data collection:\n")
+  message("Running focal analyses and merging to one data collection:\n")
 
   # case: no own coordinates file was provided ---------------------------------
   if (coords.file == "" && coords.object == "") {
@@ -103,7 +103,7 @@ census_linking_focal <- function(download = FALSE,
 
       # case: object does not exist yet ----------------------------------------
       if(!exists("dat")){
-        cat(paste(i, "... ", sep = ""))
+        message(paste(i, "... ", sep = ""))
         eval(
           parse(
             text = paste("dat <- data.frame(", i,
@@ -114,12 +114,12 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
                          sep = "")))
-        cat("done.\n")
+        message("done.\n")
       }
 
       # case: object already exists --------------------------------------------
       else{
-        cat(paste(i, "... ", sep = ""))
+        message(paste(i, "... ", sep = ""))
         eval(
           parse(
             text = paste("dat <- data.frame(cbind(dat, ", i,
@@ -130,7 +130,7 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
                          sep = "")))
-        cat("done.\n")
+        message("done.\n")
       }
 
       # # write to object in global environment ----------------------------------
@@ -146,7 +146,7 @@ census_linking_focal <- function(download = FALSE,
 
       # case: object does not exist yet ----------------------------------------
       if(!exists("dat")){
-        cat(paste(i, "... ", sep = ""))
+        message(paste(i, "... ", sep = ""))
         eval(
           parse(
             text = paste("dat <- data.frame(", i,
@@ -157,12 +157,12 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
                          sep = "")))
-        cat("done.\n")
+        message("done.\n")
       }
 
       # case: object does not exist yet ----------------------------------------
       else{
-        cat(paste(i, "... ", sep = ""))
+        message(paste(i, "... ", sep = ""))
         eval(
           parse(
             text = paste("dat <- data.frame(cbind(dat, ", i,
@@ -173,7 +173,7 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
                          sep = "")))
-        cat("done.\n")
+        message("done.\n")
       }
     }
   }
@@ -186,7 +186,7 @@ census_linking_focal <- function(download = FALSE,
 
       # case: object does not exist yet ----------------------------------------
       if(!exists("dat")){
-        cat(paste(i, "... ", sep = ""))
+        message(paste(i, "... ", sep = ""))
         eval(
           parse(
             text = paste("dat <- data.frame(", i,
@@ -197,12 +197,12 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
                          sep = "")))
-        cat("done.\n")
+        message("done.\n")
       }
 
       # case: object does not exist yet ----------------------------------------
       else{
-        cat(paste(i, "... ", sep = ""))
+        message(paste(i, "... ", sep = ""))
         eval(
           parse(
             text = paste("dat <- data.frame(cbind(dat, ", i,
@@ -213,7 +213,7 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
                          sep = "")))
-        cat("done.\n")
+        message("done.\n")
       }
     }
   }
