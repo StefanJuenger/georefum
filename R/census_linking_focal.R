@@ -114,7 +114,7 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
                          sep = "")))
-        #message("done.\n")
+        message("done.\n")
       }
 
       # case: object already exists --------------------------------------------
@@ -130,9 +130,9 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
                          sep = "")))
+        message("done.\n")
       }
     }
-    message("done.\n")
   }
 
   # case: own coordinates were provided ----------------------------------------
@@ -154,7 +154,7 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
                          sep = "")))
-        #message("done.\n")
+        message("done.\n")
       }
 
       # case: object does not exist yet ----------------------------------------
@@ -170,9 +170,9 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
                          sep = "")))
+        message("done.\n")
       }
     }
-    message("done.\n")
   }
 
   # case: own coordinates were provided ----------------------------------------
@@ -194,7 +194,7 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
                          sep = "")))
-        #message("done.\n")
+        message("done.\n")
       }
 
       # case: object does not exist yet ----------------------------------------
@@ -210,10 +210,9 @@ census_linking_focal <- function(download = FALSE,
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
                          sep = "")))
-
+        message("done.\n")
       }
     }
-    message("done.\n")
   }
 
   # remove no longer needed internal datasets ----------------------------------
