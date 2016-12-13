@@ -33,12 +33,13 @@ census_linking_simple <- function(download = FALSE,
 
   # case: census data should be downloaded -------------------------------------
   if (download == TRUE) {
-    cat("Downloading census data")
+    message("Downloading and rasterizing census data... ")
     georefum::download.census.1km()
     #download.census.100m()
 
     # rasterize downloaded data ------------------------------------------------
     georefum::rasterize.census(data.path)
+    message("done.\n")
   }
 
   # case: own, already downloaded census data should be used -------------------
@@ -53,6 +54,7 @@ census_linking_simple <- function(download = FALSE,
 
   # set missing values in census data ------------------------------------------
   if (set.missings == TRUE) {
+    message("Preparing data (set missings, etc.)... ")
     for (i in which) {
       eval(
         parse(
@@ -60,6 +62,7 @@ census_linking_simple <- function(download = FALSE,
                        sep = "")))
     }
   }
+  message("done.\n")
 
 
   # case: use random example coordinates ---------------------------------------
@@ -82,6 +85,7 @@ census_linking_simple <- function(download = FALSE,
   }
 
   # link coordinates with census data ------------------------------------------
+  message("Link census attributes to coordinates:\n")
 
   # case: no own coordinates file was provided ---------------------------------
   if (coords.file == "" && coords.object == "") {
@@ -107,6 +111,7 @@ census_linking_simple <- function(download = FALSE,
                          " census.attr$", i, ")))")))
       }
     }
+    message("done.\n")
   }
 
   # case: use own coordinates as csv -------------------------------------------
@@ -133,6 +138,7 @@ census_linking_simple <- function(download = FALSE,
                          " census.attr$", i, ")))")))
       }
     }
+    message("done.\n")
   }
 
   # case: use own coordinates as object ----------------------------------------
@@ -159,6 +165,7 @@ census_linking_simple <- function(download = FALSE,
                          " census.attr$", i, ")))")))
       }
     }
+    message("done.\n")
   }
 
 
