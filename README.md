@@ -9,6 +9,8 @@ Install the 'georefum' package from GitHub:
 devtools::install_github("stefmue/georefum")
 ~~~
 
+This may take a while as the package contains large data. Therefore, it is not in compliance with CRAN.
+
 ## cdr_*()
 Functions that refer to procedures on data originating from the European Environment Information and Observation Network (EIONET) 
 Central Data Repository (CDR). These are data that were collected according to the Environmental Noise Directive (2002/49/EG) of the
