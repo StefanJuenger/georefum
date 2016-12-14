@@ -1,6 +1,6 @@
 Package: georefum
 Type: Package
-Title: Processing and linking of spatial data within the GeorefUm project at GESIS
+Title: Processing and Linking of Spatial Data Within the GeorefUm Project at GESIS
 Version: 0.5.0
 Authors@R: person("Stefan", "Müller", email = "stefan.mueller@gesis.org",
            role = c("aut", "cre"))
