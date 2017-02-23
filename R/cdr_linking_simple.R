@@ -1,5 +1,9 @@
 # cdr_linking_simple.R
 #' Link Coordinates to data downloaded from the CDR
+#' @description This function performs spatial linking based on coordinates data
+#' and environmental noise data from the CDR. By default it uses
+#' simulated coordinates data for demonstration purposes. Own coordinates, however,
+#' can be used as well.
 #' @param file
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' andheader...

@@ -33,5 +33,8 @@ csv text file with a 'X' andheader...}
 A \code{data.frame} with census attributes for each coordinate
 }
 \description{
-Link Coordinates to German Census 2011 Data
+This function performs spatial linking based on coordinates data
+and raster grid cell data from the German Census 2011. By default it uses
+simulated coordinates data for demonstration purposes. Own coordinates, however,
+can be used as well.
 }

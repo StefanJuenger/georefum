@@ -1,6 +1,9 @@
 # cdr_check_crs.R
 #' Check for missing coordinate systems in shape files and export it to text
 #' file
+#' @description Check for missing coordinate systems in shape files and export 
+#' it to text file. Initially developed for environmental noise data from the 
+#' CDR it also can be used for all locations storing a bunch of ESRI shapefiles.
 #' @param data.path Directory to check for missing CRS
 #' @param out.file Location and name of output text file
 #' @export
