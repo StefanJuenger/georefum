@@ -13,7 +13,7 @@ This may take a while as the package contains large data. Therefore, it is not i
 
 ## cdr_*()
 Functions that refer to procedures on data originating from the European Environment Information and Observation Network (EIONET) 
-Central Data Repository (CDR). These are data that were collected according to the Environmental Noise Directive (2002/49/EG) of the
+Central Data Repository (CDR). These data were collected according to the Environmental Noise Directive (2002/49/EG) of the
 European Union. They (mostly) consist of single shapefiles containing attributes on road traffic noise, rail traffic noise, air traffic
 noise and industry noise and are licensed under a CC-BY license. 
 
