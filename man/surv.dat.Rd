@@ -24,4 +24,3 @@ A dataset containing simulated attributes of an ordinary survey with 10000
 individual respondents
 }
 \keyword{datasets}
-

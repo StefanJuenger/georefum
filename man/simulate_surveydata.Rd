@@ -12,4 +12,3 @@ simulate_surveydata(N = 10000)
 \description{
 Simulate survey data
 }
-

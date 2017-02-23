@@ -45,4 +45,3 @@ for each coordinate
 \description{
 Link Coordinates to German Census 2011 Data by Using Focal Analyses
 }
-

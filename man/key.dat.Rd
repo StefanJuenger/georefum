@@ -21,4 +21,3 @@ data(georefum::key.dat)
 A dataset containing two id variables for 10000 individual respondents
 }
 \keyword{datasets}
-

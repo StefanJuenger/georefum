@@ -15,4 +15,3 @@ sampled municipalities}
 \description{
 Simulate coordinates
 }
-

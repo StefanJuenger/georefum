@@ -15,4 +15,3 @@ cdr_harmonize(data.path = ".", which = "road", when = "lden",
 \description{
 Harmonize CDR data
 }
-

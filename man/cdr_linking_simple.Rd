@@ -16,4 +16,3 @@ A \code{data.frame} with census attributes for each coordinate
 \description{
 Link Coordinates to data downloaded from the CDR
 }
-

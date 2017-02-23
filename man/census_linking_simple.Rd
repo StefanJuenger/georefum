@@ -35,4 +35,3 @@ A \code{data.frame} with census attributes for each coordinate
 \description{
 Link Coordinates to German Census 2011 Data
 }
-

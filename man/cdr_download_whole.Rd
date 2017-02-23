@@ -14,4 +14,3 @@ cdr_download_whole(data.path = ".")
 Download all available layers of environmental noise data for all German
 federal states in the CDR
 }
-

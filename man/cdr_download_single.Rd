@@ -24,4 +24,3 @@ downloaded}
 Download single layers of environmental noise data for individual German
 federal states in the CDR
 }
-
