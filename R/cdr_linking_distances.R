@@ -1,22 +1,28 @@
 # cdr_linking_distances.R
-#' Link Coordinates to data downloaded from the CDR by calculating distances
+#' Link Coordinates to data downloaded from the CDR by calculating minimal 
+#' distances to next specified noise source
 #' @param file
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' andheader...
-#' @return A \code{data.frame} with geographic distances for each coordinate
+#' @return A \code{data.frame} with minimal geographic distances for each 
+#' coordinate
 #'@export
 
-cdr_linking_simple <- function(file = "",
-                               level = 65,
-                               coords.file = "") {
+cdr_linking_distances <- function(file = "",
+                                  level = 65,
+                                  feature.name = "Road_Lden",
+                                  coords.file = "") {
   
   # case: internal, already downloaded cdr data should be used -----------------
   if (file == "") {
+    message("Loading CDR data...")
     data(cdr.road.lden.dat)
+    message("done.")
     
     # remove features ----------------------------------------------------------
     cdr.road.lden.dat <- 
-      cdr.road.lden.dat[cdr.road.lden.dat@data$Road_Lden == level,]
+      cdr.road.lden.dat[paste("cdr.road.lden.dat@data$", feature.name, sep = "")
+                        == level,]
     
     # case: use random example coordinates -------------------------------------
     if (coords.file == "") {
@@ -25,6 +31,7 @@ cdr_linking_simple <- function(file = "",
       data("random.coords")
       
       # calculate distances ----------------------------------------------------
+      message("Calculating distances...")
       ldists <- list()
       for (i in 1:dim(random.coords)[1]) {
         dists <- vector()
@@ -34,10 +41,14 @@ cdr_linking_simple <- function(file = "",
       }
       
       ldists <- unlist(lapply(ldists, FUN = function (x) min(x)[1]))
+      message("done.")
+      
       
       # link coordinates to environmental noise data ---------------------------
-      dat <- cbind(id2 = random.coords@data[, c("id2")],
-                   ldists)
+      dat <- as.data.frame(cbind(id2 = random.coords@data[, c("id2")],
+                   ldists))
+      names(dat) <- c("id2", paste("minimal_dist_", feature.name, "_", level, 
+                                   sep = ""))
     }
     
     # case: use own coordinates ------------------------------------------------
@@ -60,11 +71,11 @@ cdr_linking_simple <- function(file = "",
       ldists <- unlist(lapply(ldists, FUN = function (x) min(x)[1]))
       
       # link coordinates to environmental noise data ---------------------------
-      dat <- cbind(id2 = coords@data[, c("id2")],
-                   sp::over(coords, cdr.road.lden.dat))
-      
+      dat <- as.data.frame(cbind(id2 = coords@data[, c("id2")],
+                                 ldists))
+      names(dat) <- c("id2", paste("minimal_dist_", feature.name, "_", level, 
+                                   sep = ""))
     }
-    
   }
   
   # case: own, already prepared cdr data should be used ------------------------
@@ -76,7 +87,8 @@ cdr_linking_simple <- function(file = "",
     
     # remove features ----------------------------------------------------------
     cdr.dat <- 
-      cdr.dat[cdr.dat@data$Road_Lden == level,]
+      cdr.dat[paste("cdr.dat@data$", feature.name, sep = "")
+              == level,]
     
     # case: use random example coordinates -------------------------------------
     if (coords.file == "") {
@@ -96,8 +108,10 @@ cdr_linking_simple <- function(file = "",
       ldists <- unlist(lapply(ldists, FUN = function (x) min(x)[1]))
       
       # link coordinates to environmental noise data ---------------------------
-      dat <- cbind(id2 = random.coords@data[, c("id2")],
-                   sp::over(random.coords, cdr.dat))
+      dat <- as.data.frame(cbind(id2 = random.coords@data[, c("id2")],
+                                 ldists))
+      names(dat) <- c("id2", paste("minimal_dist_", feature.name, "_", level, 
+                                   sep = ""))
     }
     
     # case: use own coordinates ------------------------------------------------
@@ -120,9 +134,10 @@ cdr_linking_simple <- function(file = "",
       ldists <- unlist(lapply(ldists, FUN = function (x) min(x)[1]))
       
       # link coordinates to environmental noise data ---------------------------
-      dat <- cbind(id2 = coords@data[, c("id2")],
-                   sp::over(coords, cdr.dat))
-      
+      dat <- as.data.frame(cbind(id2 = coords@data[, c("id2")],
+                                 ldists))
+      names(dat) <- c("id2", paste("minimal_dist_", feature.name, "_", level, 
+                                   sep = ""))
     }
   }
   
@@ -131,7 +146,7 @@ cdr_linking_simple <- function(file = "",
     rm("random.coords", envir = globalenv())
   }
   if(exists("cdr.road.lden.dat")) {
-    rm("census.shapes", envir = globalenv())
+    rm("cdr.road.lden.dat", envir = globalenv())
   }
   
   # return object --------------------------------------------------------------

@@ -36,9 +36,7 @@ cdr_linking_simple <- function(file = "",
       # link coordinates to environmental noise data ---------------------------
       dat <- cbind(id2 = coords@data[, c("id2")],
                    sp::over(coords, cdr.road.lden.dat))
-
     }
-
   }
 
   # case: own, already prepared cdr data should be used ------------------------
@@ -70,7 +68,6 @@ cdr_linking_simple <- function(file = "",
       # link coordinates to environmental noise data ---------------------------
       dat <- cbind(id2 = coords@data[, c("id2")],
                    sp::over(coords, cdr.dat))
-
     }
   }
 
