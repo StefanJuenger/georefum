@@ -1,5 +1,5 @@
-# census_rasterize_cat.R
-#' Convert categorized German Census 2011 files into raster grids files
+# census_rasterize_1km.R
+#' Convert German Census 2011 files into raster grids files
 #' @param data.path Has to be defined when using option \code{download =} or
 #' \code{own.data =}
 #' @param download Download census data (calls
@@ -9,19 +9,18 @@
 #' @param save.format Define which raster data format should be used for
 #' storing
 #' @param save.overwrite Will overwrite existing files if they exist
-#'@export
+#' @export
 
-census_rasterize_cat <- function(data.path = ".",
-                                 download = FALSE,
-                                 save = FALSE,
-                                 #obj.name = census.attr,
-                                 save.format = "GTiff",
-                                 save.overwrite = FALSE) {
+census_rasterize_1km <- function(data.path = ".",
+                             download = FALSE,
+                             save = FALSE,
+                             save.format = "GTiff",
+                             save.overwrite = FALSE) {
 
   # download census data from zensus2011.de if toggled -------------------------
   if (download == TRUE) {
     cat("Downloading census data")
-    download.census.1km.cat()
+    georefum::census_download_1km()
     #download.census.100m()
   }
 
@@ -30,7 +29,7 @@ census_rasterize_cat <- function(data.path = ".",
 
   # load census data -----------------------------------------------------------
   cat("Loading data... ")
-  census.1km.cat <- read.table("Zensus_klassierte_Werte_1km-Gitter.csv", sep = ";",
+  census.1km <- read.table("Zensus_spitze_Werte_1km-Gitter.csv", sep = ";",
                            dec = ",", header = TRUE)[, -1]
 
   # census100m <- read.table("Zensus_Bevoelkerung_100m-Gitter.csv", sep = ";",
@@ -39,9 +38,9 @@ census_rasterize_cat <- function(data.path = ".",
 
   # define coordinates, CRS and whether data is gridded ------------------------
   cat("Converting to raster datasets... ")
-  sp::coordinates(census.1km.cat) <- ~ x_mp_1km + y_mp_1km
-  sp::proj4string(census.1km.cat) <- sp::CRS('+init=epsg:3035')
-  sp::gridded(census.1km.cat) <- TRUE
+  sp::coordinates(census.1km) <- ~ x_mp_1km + y_mp_1km
+  sp::proj4string(census.1km) <- sp::CRS('+init=epsg:3035')
+  sp::gridded(census.1km) <- TRUE
 
   # sp::coordinates(census100m) <- ~ x_mp_100m + y_mp_100m
   # sp::proj4string(census100m) <- sp::CRS('+init=epsg:3035')
@@ -49,11 +48,11 @@ census_rasterize_cat <- function(data.path = ".",
   cat("done. \n")
 
   # delete inspire ids as they are not convertable to raster format ------------
-  # census.1km.cat <- census.1km.cat[, -1]
+  # census.1km <- census.1km[, -1]
   # census100m <- census100m[, -1]
 
   # convert each layer in single variable raster file and add to list ----------
-  for (i in names(census.1km.cat)) {
+  for (i in names(census.1km)) {
 
     # check if raster list already exists --------------------------------------
     if (!exists("census.rasters")) {
@@ -68,7 +67,7 @@ census_rasterize_cat <- function(data.path = ".",
 
         # load i raster in raster list -----------------------------------------
         eval(parse(text = paste("census.rasters$", i, "<- ",
-                                "raster::raster(census.1km.cat, layer = '", i, "')",
+                                "raster::raster(census.1km, layer = '", i, "')",
                                 sep = "")))
 
         # save i as raster file ------------------------------------------------
@@ -86,7 +85,7 @@ census_rasterize_cat <- function(data.path = ".",
 
         # load i raster in raster list -----------------------------------------
         eval(parse(text = paste("census.rasters$", i, "<- ",
-                                "raster::raster(census.1km.cat, layer = '", i, "')",
+                                "raster::raster(census.1km, layer = '", i, "')",
                                 sep = "")))
       }
     }
@@ -99,7 +98,7 @@ census_rasterize_cat <- function(data.path = ".",
 
         # load i raster in raster list -----------------------------------------
         eval(parse(text = paste("census.rasters$", i, "<- ",
-                                "raster::raster(census.1km.cat, layer = '", i, "')",
+                                "raster::raster(census.1km, layer = '", i, "')",
                                 sep = "")))
 
         # save i as raster file ------------------------------------------------
@@ -115,7 +114,7 @@ census_rasterize_cat <- function(data.path = ".",
 
         # load i raster in raster list -----------------------------------------
         eval(parse(text = paste("census.rasters$", i, "<- ",
-                                "raster::raster(census.1km.cat, layer = '", i, "')",
+                                "raster::raster(census.1km, layer = '", i, "')",
                                 sep = "")))
       }
     }
