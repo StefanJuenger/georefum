@@ -1,14 +1,19 @@
-# check.CSR.R
-#' Check for missing corrdinate systems in shape files and export it to text
+# cdr_check_crs.R
+#' Check for missing coordinate systems in shape files and export it to text
 #' file
+#' @param data.path Directory to check for missing CRS
+#' @param out.file Location and name of output text file
 #' @export
 
-check.CSR <- function(data.path, out.file){
-  # create a list of all shp files
+cdr_check_crs <- function(data.path, out.file) {
+  
+  # create recursive list of all shp files in data.path ------------------------
   shp.files <- list.files(data.path, recursive = TRUE, full.names = TRUE)[
     grep(c(".shp|SHP"), list.files(data.path, recursive = TRUE,
                                    full.names = TRUE))]
-  lapply(shp.files, function(x){
+  
+  # read in all shp files, check for missing CSR and write in list -------------
+  lapply(shp.files, function (x) {
     setwd(dirname(x))
     data <- readOGR(basename(x),
                     basename(paste(substr(x, 1, nchar(x)-4), sep = "")))
