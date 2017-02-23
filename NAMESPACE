@@ -3,6 +3,7 @@
 export(cdr_download_single)
 export(cdr_download_whole)
 export(cdr_harmonize)
+export(cdr_linking_distances)
 export(cdr_linking_simple)
 export(census_download_100m)
 export(census_download_1km)

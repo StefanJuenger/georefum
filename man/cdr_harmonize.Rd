@@ -10,6 +10,10 @@ cdr_harmonize(data.path = ".", which = "road", when = "lden",
 \arguments{
 \item{data.path}{Folder where the CDR shapefiles live}
 
+\item{which}{Which noise type should be harmonized}
+
+\item{when}{Which daytime of noise should be harmonized}
+
 \item{crs}{Definition of coordinate reference system}
 }
 \description{
