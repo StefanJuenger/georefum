@@ -1,10 +1,12 @@
-# download.census.R
+# census_download.R
 #' Download
 #'@param data.path Place where the data will be stored
-#'@export
+#'@export census_download_1km
+#'@export census_download_1km_cat 
+#'@export census_download_100m
 
 # download census 1km grid data ------------------------------------------------
-download_census_1km <- function(data.path = "."){
+census_download_1km <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Pressemitteilung/DemografischeGrunddaten/",
                             "csv_Zensusatlas_spitze_Werte_1km_Gitter.zip",
@@ -27,7 +29,7 @@ download_census_1km <- function(data.path = "."){
 }
 
 # download census 1km grid data (categorized) ----------------------------------
-download_census_1km_cat <- function(data.path = "."){
+census_download_1km_cat <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Pressemitteilung/DemografischeGrunddaten/",
                             "csv_Zensusatlas_klassierte_Werte_1km_Gitter.zip",
@@ -50,7 +52,7 @@ download_census_1km_cat <- function(data.path = "."){
 }
 
 # download census 100m grid data -----------------------------------------------
-download_census_100m <- function(data.path = "."){
+census_download_100m <- function(data.path = "."){
   download.file(url = paste("https://www.zensus2011.de/SharedDocs/Downloads/",
                             "DE/Pressemitteilung/DemografischeGrunddaten/",
                             "csv_Bevoelkerung_100m_Gitter.zip",
