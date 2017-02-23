@@ -11,7 +11,8 @@ cdr_linking_simple(file = "", coords.file = "")
 csv text file with a 'X' andheader...}
 }
 \value{
-A \code{data.frame} with census attributes for each coordinate
+A \code{data.frame} with environmental noise attributes for each 
+        coordinate
 }
 \description{
 Link Coordinates to data downloaded from the CDR

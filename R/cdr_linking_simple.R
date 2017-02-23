@@ -3,13 +3,14 @@
 #' @param file
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' andheader...
-#' @return A \code{data.frame} with census attributes for each coordinate
+#' @return A \code{data.frame} with environmental noise attributes for each 
+#'         coordinate
 #' @export
 
 cdr_linking_simple <- function(file = "",
                                coords.file = "") {
 
-  # case: own, already prepared cdr data should be used ------------------------
+  # case: internal, already downloaded cdr data should be used -----------------
   if (file == "") {
     data(cdr.road.lden.dat)
 
@@ -35,18 +36,15 @@ cdr_linking_simple <- function(file = "",
       # link coordinates to environmental noise data ---------------------------
       dat <- cbind(id2 = coords@data[, c("id2")],
                    sp::over(coords, cdr.road.lden.dat))
-
     }
-
   }
 
-  # case: internal, already downloaded cdr data should be used -----------------
+  # case: own, already prepared cdr data should be used ------------------------
   else {
     cdr.dat <- rgdal::readOGR(rgdal::readOGR(basename(file),
                                              basename(paste(
                                                substr(file, 1, nchar(file)-4),
                                                sep = ''))))
-
 
     # case: use random example coordinates -------------------------------------
     if (coords.file == "") {
@@ -70,7 +68,6 @@ cdr_linking_simple <- function(file = "",
       # link coordinates to environmental noise data ---------------------------
       dat <- cbind(id2 = coords@data[, c("id2")],
                    sp::over(coords, cdr.dat))
-
     }
   }
 
@@ -80,9 +77,6 @@ cdr_linking_simple <- function(file = "",
   }
   if(exists("cdr.road.lden.dat")) {
     rm("census.shapes", envir = globalenv())
-  }
-  if(exists("cdr.road.lden.dat")) {
-    rm("cdr.dat", envir = globalenv())
   }
 
   # return object --------------------------------------------------------------

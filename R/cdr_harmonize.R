@@ -1,6 +1,8 @@
 # cdr_harmonize.R
 #' Harmonize CDR data
 #' @param data.path Folder where the CDR shapefiles live
+#' @param which Which noise type should be harmonized
+#' @param when Which daytime of noise should be harmonized
 #' @param crs Definition of coordinate reference system
 #' @export
 
