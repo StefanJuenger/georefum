@@ -1,8 +1,8 @@
 # census_linking_focal.R
 #' Link Coordinates to German Census 2011 Data by Using Focal Analyses
 #' @description This function performs spatial linking based on coordinates data
-#' and the results of focal analyses based on raster grid cell data from the 
-#' German Census 2011. By default it uses simulated coordinates data for 
+#' and the results of focal analyses based on raster grid cell data from the
+#' German Census 2011. By default it uses simulated coordinates data for
 #' demonstration purposes. Own coordinates, however, can be used as well.
 #' @param download Download census data (calls
 #' \code{georefum::download.census()})
@@ -26,10 +26,12 @@
 
 census_linking_focal <- function(download = FALSE,
                                  own.data = FALSE,
-                                 which = c("Einwohner", "Alter_D", "unter18_A",
-                                           "ab65_A", "Auslaender_A",
-                                           "HHGroesse_D", "Leerstandsquote",
-                                           "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
+                                 which = c("Einwohner", "Frauen_A", "Alter_D",
+                                           "unter18_A", "ab65_A",
+                                           "Auslaender_A","HHGroesse_D",
+                                           "Leerstandsquote", "Wohnfl_Bew_D",
+                                           "Wohnfl_Whg_D"),
+                                 categorical = TRUE,
                                  set.missings = TRUE,
                                  data.path = ".",
                                  coords.file = "",
@@ -63,6 +65,16 @@ census_linking_focal <- function(download = FALSE,
   # case: internal, already downloaded census data should be used --------------
   if(download == FALSE & own.data == FALSE){
     data(census.attr)
+    census.data <- census.attr
+  }
+  if (download == FALSE & own.data == FALSE & categorical == TRUE) {
+    data(census.attr.cat)
+    census.data <- census.attr.cat
+  }
+
+  # delete Frauen_A from list if regular census attributes are used
+  if (categorical == FALSE) {
+    which <- which[!which == "Frauen_A"]
   }
 
   # set missing values in census data ------------------------------------------
@@ -71,7 +83,7 @@ census_linking_focal <- function(download = FALSE,
     for (i in which) {
       eval(
         parse(
-          text = paste("census.attr$", i, "[census.attr$", i, " <= -1] <- NA",
+          text = paste("census.data$", i, "[census.data$", i, " <= -1] <- NA",
                        sep = "")))
     }
   }
@@ -117,7 +129,7 @@ census_linking_focal <- function(download = FALSE,
             text = paste("dat <- data.frame(", i,
                          ".", suffix, " = ",
                          "SDMTools::extract.data(random.coords@coords, ",
-                         "raster::focal(census.attr$", i,
+                         "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
@@ -133,7 +145,7 @@ census_linking_focal <- function(download = FALSE,
             text = paste("dat <- data.frame(cbind(dat, ", i,
                          ".", suffix, " = ",
                          "SDMTools::extract.data(random.coords@coords, ",
-                         "raster::focal(census.attr$", i,
+                         "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
@@ -157,7 +169,7 @@ census_linking_focal <- function(download = FALSE,
             text = paste("dat <- data.frame(", i,
                          ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
-                         "raster::focal(census.attr$", i,
+                         "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
@@ -173,7 +185,7 @@ census_linking_focal <- function(download = FALSE,
             text = paste("dat <- data.frame(cbind(dat, ", i,
                          ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
-                         "raster::focal(census.attr$", i,
+                         "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",
@@ -197,7 +209,7 @@ census_linking_focal <- function(download = FALSE,
             text = paste("dat <- data.frame(", i,
                          ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
-                         "raster::focal(census.attr$", i,
+                         "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])})))",
@@ -213,7 +225,7 @@ census_linking_focal <- function(download = FALSE,
             text = paste("dat <- data.frame(cbind(dat, ", i,
                          ".", suffix, " = ",
                          "SDMTools::extract.data(coords@coords, ",
-                         "raster::focal(census.attr$", i,
+                         "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
                          "function(x){", fun, "(x[-which(is.na(x))])}))))",

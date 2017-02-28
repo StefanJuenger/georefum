@@ -23,10 +23,12 @@
 
 census_linking_simple <- function(download = FALSE,
                                   own.data = FALSE,
-                                  which = c("Einwohner", "Alter_D", "unter18_A",
-                                            "ab65_A", "Auslaender_A",
-                                            "HHGroesse_D", "Leerstandsquote",
-                                            "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
+                                  which = c("Einwohner", "Frauen_A", "Alter_D",
+                                            "unter18_A", "ab65_A",
+                                            "Auslaender_A","HHGroesse_D",
+                                            "Leerstandsquote", "Wohnfl_Bew_D",
+                                            "Wohnfl_Whg_D"),
+                                  categorical = FALSE,
                                   set.missings = TRUE,
                                   data.path = ".",
                                   coords.file = "",
@@ -52,8 +54,18 @@ census_linking_simple <- function(download = FALSE,
   }
 
   # case: internal, already downloaded census data should be used --------------
-  if (download == FALSE & own.data == FALSE) {
+  if (download == FALSE & own.data == FALSE & categorical == FALSE) {
     data(census.attr)
+    census.data <- census.attr
+  }
+  if (download == FALSE & own.data == FALSE & categorical == TRUE) {
+    data(census.attr.cat)
+    census.data <- census.attr.cat
+  }
+
+  # delete Frauen_A from list if regular census attributes are used
+  if (categorical == FALSE) {
+    which <- which[!which == "Frauen_A"]
   }
 
   # set missing values in census data ------------------------------------------
@@ -62,12 +74,12 @@ census_linking_simple <- function(download = FALSE,
     for (i in which) {
       eval(
         parse(
-          text = paste("census.attr$", i, "[census.attr$", i, " <= -1] <- NA",
+          text = paste("census.data$", i, "[census.data$", i, " <= -1] <- NA",
                        sep = "")))
     }
   }
-  message("done.\n")
 
+  message("done.\n")
 
   # case: use random example coordinates ---------------------------------------
   if (coords.file == "" && coords.object == "") {
@@ -107,7 +119,7 @@ census_linking_simple <- function(download = FALSE,
           parse(
             text = paste("dat <- data.frame(", i,
                          " = SDMTools::extract.data(random.coords@coords,",
-                         " census.attr$", i, "))")))
+                         " census.data$", i, "))")))
       }
 
       # case: object already exists --------------------------------------------
@@ -116,7 +128,7 @@ census_linking_simple <- function(download = FALSE,
           parse(
             text = paste("dat <- data.frame(cbind(dat,", i,
                          " = SDMTools::extract.data(random.coords@coords,",
-                         " census.attr$", i, ")))")))
+                         " census.data$", i, ")))")))
       }
     }
     message("done.\n")
@@ -134,7 +146,7 @@ census_linking_simple <- function(download = FALSE,
           parse(
             text = paste("dat <- data.frame(", i,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.attr$", i, "))")))
+                         " census.data$", i, "))")))
       }
 
       # case: object already exists --------------------------------------------
@@ -143,7 +155,7 @@ census_linking_simple <- function(download = FALSE,
           parse(
             text = paste("dat <- data.frame(cbind(dat,", i,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.attr$", i, ")))")))
+                         " census.data$", i, ")))")))
       }
     }
     message("done.\n")
@@ -161,7 +173,7 @@ census_linking_simple <- function(download = FALSE,
           parse(
             text = paste("dat <- data.frame(", i,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.attr$", i, "))")))
+                         " census.data$", i, "))")))
       }
 
       # case: object already exists --------------------------------------------
@@ -170,7 +182,7 @@ census_linking_simple <- function(download = FALSE,
           parse(
             text = paste("dat <- data.frame(cbind(dat,", i,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.attr$", i, ")))")))
+                         " census.data$", i, ")))")))
       }
     }
     message("done.\n")
@@ -179,10 +191,13 @@ census_linking_simple <- function(download = FALSE,
 
   # remove no longer needed internal datasets ----------------------------------
   if (exists("census.attr")) {
-    rm("census.attr", envir = globalenv())
+    rm(census.attr, envir = globalenv())
+  }
+  if (exists("census.attr.cat")) {
+    rm(census.attr.cat, envir = globalenv())
   }
   if (exists("random.coords")) {
-    rm("random.coords", envir = globalenv())
+    rm(random.coords, envir = globalenv())
   }
 
   # write to object in global environment --------------------------------------
