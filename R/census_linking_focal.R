@@ -1,5 +1,9 @@
 # census_linking_focal.R
 #' Link Coordinates to German Census 2011 Data by Using Focal Analyses
+#' @description This function performs spatial linking based on coordinates data
+#' and the results of focal analyses based on raster grid cell data from the 
+#' German Census 2011. By default it uses simulated coordinates data for 
+#' demonstration purposes. Own coordinates, however, can be used as well.
 #' @param download Download census data (calls
 #' \code{georefum::download.census()})
 #' @param own.data Use own already downloaded census data (calls

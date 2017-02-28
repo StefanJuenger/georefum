@@ -15,5 +15,8 @@ A \code{data.frame} with environmental noise attributes for each
         coordinate
 }
 \description{
-Link Coordinates to data downloaded from the CDR
+This function performs spatial linking based on coordinates data
+and environmental noise data from the CDR. By default it uses
+simulated coordinates data for demonstration purposes. Own coordinates, however,
+can be used as well.
 }

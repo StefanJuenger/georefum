@@ -17,6 +17,8 @@ A \code{data.frame} with minimal geographic distances for each
 coordinate
 }
 \description{
-Link Coordinates to data downloaded from the CDR by calculating minimal 
-distances to next specified noise source
+This function performs spatial linking based on coordinates data
+and minimal distances based on environmental noise data from the CDR. By default it uses
+simulated coordinates data for demonstration purposes. Own coordinates, however,
+can be used as well.
 }
