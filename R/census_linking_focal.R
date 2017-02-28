@@ -81,15 +81,19 @@ census_linking_focal <- function(download = FALSE,
   # case: use own coordinates as csv -------------------------------------------
   if (coords.file != "" && coords.object == "") {
     coords <- read.table(coords.file, sep = ";", dec = ",", header = TRUE)
-    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
+        coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
                                      proj4string = CRS("+init=epsg:3035"))
   }
 
   # case: use own coordinates as object ----------------------------------------
   if (coords.file == "" && coords.object != "") {
     coords <- coords.object
-    coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
-                                     proj4string = CRS("+init=epsg:3035"))
+
+    # case: coords.object is no SpatialPointsDataFrame
+    if (class(coords) != "SpatialPointsDataFrame") {
+      coords <- SpatialPointsDataFrame(coords[, c("x", "y" )], coords,
+                                       proj4string = CRS("+init=epsg:3035"))
+    }
   }
 
   # focal analyses -------------------------------------------------------------
