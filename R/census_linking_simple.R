@@ -32,7 +32,8 @@ census_linking_simple <- function(download = FALSE,
                                   set.missings = TRUE,
                                   data.path = ".",
                                   coords.file = "",
-                                  coords.object = "") {
+                                  coords.object = "",
+                                  suffix = "") {
 
   # workaround for internal raster function in SDMTools::extract.data ----------
   require(raster)
@@ -117,18 +118,18 @@ census_linking_simple <- function(download = FALSE,
       if (!exists("dat")) {
         eval(
           parse(
-            text = paste("dat <- data.frame(", i,
+            text = paste("dat <- data.frame(", i, suffix,
                          " = SDMTools::extract.data(random.coords@coords,",
-                         " census.data$", i, "))")))
+                         " census.data$", i, "))", sep = "")))
       }
 
       # case: object already exists --------------------------------------------
       else {
         eval(
           parse(
-            text = paste("dat <- data.frame(cbind(dat,", i,
+            text = paste("dat <- data.frame(cbind(dat,", i, suffix,
                          " = SDMTools::extract.data(random.coords@coords,",
-                         " census.data$", i, ")))")))
+                         " census.data$", i, ")))", sep = "")))
       }
     }
     message("done.\n")
@@ -144,18 +145,18 @@ census_linking_simple <- function(download = FALSE,
       if (!exists("dat")) {
         eval(
           parse(
-            text = paste("dat <- data.frame(", i,
+            text = paste("dat <- data.frame(", i, suffix,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.data$", i, "))")))
+                         " census.data$", i, "))", sep = "")))
       }
 
       # case: object already exists --------------------------------------------
       else {
         eval(
           parse(
-            text = paste("dat <- data.frame(cbind(dat,", i,
+            text = paste("dat <- data.frame(cbind(dat,", i, suffix,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.data$", i, ")))")))
+                         " census.data$", i, ")))", sep = "")))
       }
     }
     message("done.\n")
@@ -171,18 +172,18 @@ census_linking_simple <- function(download = FALSE,
       if (!exists("dat")) {
         eval(
           parse(
-            text = paste("dat <- data.frame(", i,
+            text = paste("dat <- data.frame(", i, suffix,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.data$", i, "))")))
+                         " census.data$", i, "))", sep = "")))
       }
 
       # case: object already exists --------------------------------------------
       else {
         eval(
           parse(
-            text = paste("dat <- data.frame(cbind(dat,", i,
+            text = paste("dat <- data.frame(cbind(dat,", i, suffix,
                          " = SDMTools::extract.data(coords@coords,",
-                         " census.data$", i, ")))")))
+                         " census.data$", i, ")))", sep = "")))
       }
     }
     message("done.\n")
