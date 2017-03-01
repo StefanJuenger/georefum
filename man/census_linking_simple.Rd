@@ -5,10 +5,10 @@
 \title{Link Coordinates to German Census 2011 Data}
 \usage{
 census_linking_simple(download = FALSE, own.data = FALSE,
-  which = c("Einwohner", "Alter_D", "unter18_A", "ab65_A", "Auslaender_A",
-  "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
-  set.missings = TRUE, data.path = ".", coords.file = "",
-  coords.object = "")
+  which = c("Einwohner", "Frauen_A", "Alter_D", "unter18_A", "ab65_A",
+  "Auslaender_A", "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D",
+  "Wohnfl_Whg_D"), categorical = FALSE, set.missings = TRUE,
+  data.path = ".", coords.file = "", coords.object = "", suffix = "")
 }
 \arguments{
 \item{download}{Download census data (calls

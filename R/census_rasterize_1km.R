@@ -12,10 +12,10 @@
 #' @export
 
 census_rasterize_1km <- function(data.path = ".",
-                             download = FALSE,
-                             save = FALSE,
-                             save.format = "GTiff",
-                             save.overwrite = FALSE) {
+                                 download = FALSE,
+                                 save = FALSE,
+                                 save.format = "GTiff",
+                                 save.overwrite = FALSE) {
 
   # download census data from zensus2011.de if toggled -------------------------
   if (download == TRUE) {

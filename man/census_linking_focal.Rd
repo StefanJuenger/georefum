@@ -5,11 +5,12 @@
 \title{Link Coordinates to German Census 2011 Data by Using Focal Analyses}
 \usage{
 census_linking_focal(download = FALSE, own.data = FALSE,
-  which = c("Einwohner", "Alter_D", "unter18_A", "ab65_A", "Auslaender_A",
-  "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D", "Wohnfl_Whg_D"),
-  set.missings = TRUE, data.path = ".", coords.file = "",
-  coords.object = "", focal.matrix = matrix(c(1, 1, 1, 1, 1, 1, 1, 1, 1), nr
-  = 3, nc = 3), fun = "mean", suffix = "mean")
+  which = c("Einwohner", "Frauen_A", "Alter_D", "unter18_A", "ab65_A",
+  "Auslaender_A", "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D",
+  "Wohnfl_Whg_D"), categorical = TRUE, set.missings = TRUE,
+  data.path = ".", coords.file = "", coords.object = "",
+  focal.matrix = matrix(c(1, 1, 1, 1, 1, 1, 1, 1, 1), nr = 3, nc = 3),
+  fun = "mean", suffix = "mean")
 }
 \arguments{
 \item{download}{Download census data (calls
@@ -44,7 +45,7 @@ for each coordinate
 }
 \description{
 This function performs spatial linking based on coordinates data
-and the results of focal analyses based on raster grid cell data from the 
-German Census 2011. By default it uses simulated coordinates data for 
+and the results of focal analyses based on raster grid cell data from the
+German Census 2011. By default it uses simulated coordinates data for
 demonstration purposes. Own coordinates, however, can be used as well.
 }
