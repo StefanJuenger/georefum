@@ -4,10 +4,12 @@
 \alias{simulate_surveydata}
 \title{Simulate survey data}
 \usage{
-simulate_surveydata(N = 10000)
+simulate_surveydata(N = 10000, na = 500)
 }
 \arguments{
 \item{N}{Number of respondents that should be simulated}
+
+\item{na}{Number of missing values in attributes}
 }
 \description{
 Simulate survey data
