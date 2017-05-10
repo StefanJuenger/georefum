@@ -18,10 +18,11 @@ simulate_coordinates <- function(mun.N = 100,
     # draw random sample of municipalities -------------------------------------
     municipalities.random <- sp::rbind.SpatialPolygonsDataFrame(
       census.shapes$municipalities[
-        sample(nrow(census.shapes$municipalities), mun.N),],
-      census.shapes$municipalities[
-        census.shapes$municipalities@data$GEN == "Köln" |
-          census.shapes$municipalities@data$GEN == "München",])
+        sample(nrow(census.shapes$municipalities), mun.N),]#,
+      #census.shapes$municipalities[
+      #  census.shapes$municipalities@data$GEN == "Köln" |
+      #    census.shapes$municipalities@data$GEN == "München",]
+      )
 
     # draw random sample of random municipalities ------------------------------
     for (i in 1:nrow(municipalities.random)) {
@@ -80,17 +81,20 @@ simulate_coordinates <- function(mun.N = 100,
   }
 
   # assign random id to every case ---------------------------------------------
-  data(key.dat)
+  #data(key.dat)
 
   k <- sp::SpatialPointsDataFrame(coords = k@coords,
-                                  data = as.data.frame(key.dat$id2),
+                                  data = as.data.frame(stringr::str_pad(
+                                    sample(1:(mun.N * resp.N), (mun.N * resp.N),
+                                           replace = FALSE),
+                                    nchar((mun.N * resp.N)), pad = "0")),
                                   proj4string = sp::CRS('+init=epsg:3035'))
   names(k) <- "id2"
 
   # remove no longer needed internal datasets ----------------------------------
-  if (exists("key.dat")) {
-    rm("key.dat", envir = globalenv())
-  }
+  #if (exists("key.dat")) {
+  #  rm("key.dat", envir = globalenv())
+  #}
   if(exists("census.shapes")) {
     rm("census.shapes", envir = globalenv())
   }
