@@ -7,7 +7,7 @@
 census_linking_focal(download = FALSE, own.data = FALSE,
   which = c("Einwohner", "Frauen_A", "Alter_D", "unter18_A", "ab65_A",
   "Auslaender_A", "HHGroesse_D", "Leerstandsquote", "Wohnfl_Bew_D",
-  "Wohnfl_Whg_D"), categorical = TRUE, set.missings = TRUE,
+  "Wohnfl_Whg_D"), categorical = FALSE, set.missings = TRUE,
   data.path = ".", coords.file = "", coords.object = "",
   focal.matrix = matrix(c(1, 1, 1, 1, 1, 1, 1, 1, 1), nr = 3, nc = 3),
   fun = "mean", suffix = "mean")
@@ -38,6 +38,8 @@ can be weighted as well as set to \code{NA} (for details see function
 \item{suffix}{Suffix that is appended to variable names}
 
 \item{set.missing}{Toggle whether to set missings on Census attributes}
+
+\item{na.delete}{logical. If TRUE, NA will be removed from focal computations. The result will only be NA if all focal cells are NA. Except for some special cases (weights of 1, functions like min, max, mean), using na.rm=TRUE is generally not a good idea in this function because it will unbalance the effect of the weights}
 }
 \value{
 A \code{data.frame} with census attributes based on focal analyses

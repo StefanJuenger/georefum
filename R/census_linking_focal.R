@@ -19,6 +19,7 @@
 #' can be weighted as well as set to \code{NA} (for details see function
 #' \code{raster::focal()})
 #' @param fun Function that is used in the focal analyses
+#' @param na.delete logical. If TRUE, NA will be removed from focal computations. The result will only be NA if all focal cells are NA. Except for some special cases (weights of 1, functions like min, max, mean), using na.rm=TRUE is generally not a good idea in this function because it will unbalance the effect of the weights
 #' @param suffix Suffix that is appended to variable names
 #' @return A \code{data.frame} with census attributes based on focal analyses
 #' for each coordinate
@@ -31,7 +32,7 @@ census_linking_focal <- function(download = FALSE,
                                            "Auslaender_A","HHGroesse_D",
                                            "Leerstandsquote", "Wohnfl_Bew_D",
                                            "Wohnfl_Whg_D"),
-                                 categorical = TRUE,
+                                 categorical = FALSE,
                                  set.missings = TRUE,
                                  data.path = ".",
                                  coords.file = "",
@@ -132,7 +133,7 @@ census_linking_focal <- function(download = FALSE,
                          "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
-                         "function(x){", fun, "(x[-which(is.na(x))])})))",
+                         "function(x){", fun, "(x[-which(is.na(x))], na.rm = TRUE)})))",
                          sep = "")))
         message("done.\n")
       }
@@ -148,7 +149,7 @@ census_linking_focal <- function(download = FALSE,
                          "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
-                         "function(x){", fun, "(x[-which(is.na(x))])}))))",
+                         "function(x){", fun, "(x[-which(is.na(x))], na.rm = TRUE)})))",
                          sep = "")))
         message("done.\n")
       }
@@ -172,7 +173,7 @@ census_linking_focal <- function(download = FALSE,
                          "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
-                         "function(x){", fun, "(x[-which(is.na(x))])})))",
+                         "function(x){", fun, "(x[-which(is.na(x))], na.rm = TRUE)})))",
                          sep = "")))
         message("done.\n")
       }
@@ -188,7 +189,7 @@ census_linking_focal <- function(download = FALSE,
                          "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
-                         "function(x){", fun, "(x[-which(is.na(x))])}))))",
+                         "function(x){", fun, "(x[-which(is.na(x))], na.rm = TRUE)})))",
                          sep = "")))
         message("done.\n")
       }
@@ -212,7 +213,7 @@ census_linking_focal <- function(download = FALSE,
                          "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
-                         "function(x){", fun, "(x[-which(is.na(x))])})))",
+                         "function(x){", fun, "(x[-which(is.na(x))], na.rm = TRUE)})))",
                          sep = "")))
         message("done.\n")
       }
@@ -228,7 +229,7 @@ census_linking_focal <- function(download = FALSE,
                          "raster::focal(census.data$", i,
                          ", w = focal.matrix, ",
                          "fun = ",
-                         "function(x){", fun, "(x[-which(is.na(x))])}))))",
+                         "function(x){", fun, "(x[-which(is.na(x))], na.rm = TRUE)})))",
                          sep = "")))
         message("done.\n")
       }
