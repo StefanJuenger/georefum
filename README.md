@@ -1,6 +1,5 @@
 # georefum
-This is an R package. Currently, it is under heavy, heavy development. So please do not expect a finished product. Especially the 
-documentation is lacking relevant information. But it is planned to deliver a stable version by February 2017. So stay tuned!
+This is an R package for spatial linking of survey data with German Census 2011 and environmental noise data. It can be used for illustrative purposes but also for your own survey and coordinates data. All routines are implemented in compliance with German data protections legislations as described in Schweers et al. 2016 (http://dx.doi.org/10.1080/15420353.2015.1100152). However, use it at your own risk.
 
 ## Installation
 Install the 'georefum' package from GitHub:
