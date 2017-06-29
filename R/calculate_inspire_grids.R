@@ -1,5 +1,5 @@
 # calculate_inspire_grids.R
-#' Calculate 1km and 10m INSPIRE Grid IDs from coordinates and add to data.frame
+#' Calculate 1km and 100m INSPIRE Grid IDs from coordinates and add to data.frame
 #' @param coords.file Path to file with coordinates; must be formatted as
 #' csv text file with a 'X' and header...
 #' @param coords.object An R object ("Rdata" or "rda") containing the
@@ -43,14 +43,14 @@ calculate_inspire_grids.R <- function(coords.file = "",
                            substr(as.character(coords$y), 1, 4),
                            "E",
                            substr(as.character(coords$x), 1, 4),
-                           , sep = "")
+                           sep = "")
 
   # calculate 100m INSPIRE Grid ID ---------------------------------------------
-  dat$INSPIRE_1km <- paste("100mN",
-                           substr(as.character(coords$y), 1, 5),
-                           "E",
-                           substr(as.character(coords$x), 1, 5),
-                           , sep = "")
+  dat$INSPIRE_100m <- paste("100mN",
+                            substr(as.character(coords$y), 1, 5),
+                            "E",
+                            substr(as.character(coords$x), 1, 5),
+                            sep = "")
 
   # return data.frame ----------------------------------------------------------
   return(dat)
