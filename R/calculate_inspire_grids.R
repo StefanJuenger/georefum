@@ -8,7 +8,7 @@
 #' @export
 #'
 
-calculate_inspire_grids.R <- function(coords.file = "",
+calculate_inspire_grids <- function(coords.file = "",
                                       coords.object = "") {
 
   # case: use random example coordinates ---------------------------------------
