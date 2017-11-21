@@ -30,11 +30,15 @@ xy_from_inspire <- function(id.file = "",
   eval(
     parse(
       text = paste0(
-        "ids$x <- paste0(substr(ids$", col.name, ", 10, 13), '00');
-         ids$y <- paste0(substr(ids$", col.name, ", 5, 8), '00')"
+        "ids$x <- as.numeric(paste0(substr(ids$", col.name, ", 10, 13), '500'));
+         ids$y <- as.numeric(paste0(substr(ids$", col.name, ", 5, 8), '500'))"
       )
     )
   )
+
+  # if each coordinate has less than 7 digits, something's wrong - set as NA
+  ids$x[nchar(ids$x) < 7] <- NA
+  ids$y[nchar(ids$y) < 7] <- NA
 
   # return data.frame ----------------------------------------------------------
   return(ids)
